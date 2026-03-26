@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5, user-scalable=yes">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>FutureMend Initiative – Mending the Future, One Life at a Time</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --blue: #1a3a6b;
+    --sky: #2563a8;
+    --gold: #d4a017;
+    --amber: #f59e0b;
+    --orange: #f97316;
+    --cream: #fef9f0;
+    --white: #ffffff;
+    --light: #f0f6ff;
+    --muted: #8899aa;
+    --text: #1e2d3d;
+    --grad1: linear-gradient(135deg, #0a1628 0%, #1a3a6b 60%, #2563a8 100%);
+    --grad2: linear-gradient(135deg, #d4a017 0%, #f59e0b 50%, #f97316 100%);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Ensure images don't get selected on mobile */
+  img, button, a { -webkit-user-select: none; user-select: none; }
+  
+  /* Allow text selection in appropriate areas */
+  p, h1, h2, h3, h4, h5, h6, span, li { -webkit-user-select: text; user-select: text; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 72px;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(212,160,23,0.15);
+    transition: background 0.3s;
+  }
+  .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  .logo-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--grad2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900; color: var(--navy);
+    box-shadow: 0 4px 18px rgba(212,160,23,0.35);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .logo-icon img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+  }
+  .logo-icon-text {
+    display: none;
+  }
+  .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .logo-text strong { font-size: 15px; font-weight: 600; color: var(--white); letter-spacing: 0.3px; }
+  .logo-text span { font-size: 10px; font-weight: 400; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { 
+    text-decoration: none; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; letter-spacing: 0.3px; 
+    transition: color 0.2s; -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:focus-visible { outline-color: var(--gold); }
+  .nav-cta {
+    background: var(--grad2); color: var(--navy);
+    padding: 9px 22px; border-radius: 50px; font-size: 13px; font-weight: 600;
+    text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(212,160,23,0.3);
+    border: none; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,160,23,0.45); }
+  .nav-cta:focus-visible { outline-color: var(--navy); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--grad1);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+    padding-top: 72px;
+  }
+  .hero-bg-art {
+    position: absolute; inset: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: 0.18;
+    animation: drift 12s ease-in-out infinite alternate;
+  }
+  .orb1 { width: 600px; height: 600px; background: var(--amber); top: -200px; right: -150px; }
+  .orb2 { width: 400px; height: 400px; background: #2563a8; bottom: -100px; left: -100px; animation-delay: -4s; }
+  .orb3 { width: 300px; height: 300px; background: var(--gold); top: 40%; right: 25%; animation-delay: -8s; }
+  @keyframes drift { to { transform: translate(30px, -30px) scale(1.05); } }
+
+  /* grid lines */
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1200px; margin: 0 auto; padding: 0 5%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(212,160,23,0.15); border: 1px solid rgba(212,160,23,0.4);
+    color: var(--gold); padding: 6px 16px; border-radius: 50px;
+    font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge::before { content: '✦'; font-size: 10px; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  h1 em { font-style: normal; color: var(--gold); }
+  .hero-sub {
+    color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.7;
+    max-width: 480px; margin-bottom: 36px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp 0.8s 0.45s ease both; }
+  .btn-primary {
+    background: var(--grad2); color: var(--navy);
+    padding: 14px 30px; border-radius: 50px; font-size: 15px; font-weight: 700;
+    text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 24px rgba(212,160,23,0.4);
+    display: inline-flex; align-items: center; gap: 8px;
+    border: none; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(212,160,23,0.5); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:focus-visible { outline-color: var(--gold); }
+  
+  .btn-outline {
+    border: 2px solid rgba(255,255,255,0.4); color: var(--white);
+    padding: 14px 30px; border-radius: 50px; font-size: 15px; font-weight: 600;
+    text-decoration: none; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.8); }
+  .btn-outline:active { background: rgba(255,255,255,0.15); }
+  .btn-sponsor {
+    background: rgba(255,255,255,0.3);
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 14px 30px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .btn-sponsor:hover { background: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.9); }
+  .btn-sponsor:focus-visible { outline-color: var(--gold); }
+  .btn-outline:focus-visible { outline-color: var(--gold); }
+  .hero-social {
+    display: flex; gap: 14px; margin-top: 36px;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+  .social-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8); padding: 8px 16px; border-radius: 50px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    transition: all 0.2s; backdrop-filter: blur(8px);
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    cursor: pointer;
+  }
+  .social-pill:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); color: var(--white); }
+  .social-pill:focus-visible { outline-color: var(--gold); }
+  .social-pill svg { width: 16px; height: 16px; }
+
+  .hero-visual {
+    position: relative; animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-card {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 24px; padding: 32px;
+    position: relative; overflow: hidden;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--grad2);
+  }
+  .hero-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .stat-box {
+    background: rgba(255,255,255,0.06); border-radius: 16px;
+    padding: 20px; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 900; color: var(--gold); line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 500; }
+  .hero-quote {
+    margin-top: 20px; padding: 16px 20px;
+    background: rgba(212,160,23,0.1); border-radius: 12px;
+    border-left: 3px solid var(--gold);
+    color: rgba(255,255,255,0.8); font-size: 13px; line-height: 1.6;
+    font-style: italic;
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── SECTIONS SHARED ── */
+  section { padding: 100px 5%; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(212,160,23,0.15), rgba(249,115,22,0.15));
+    border: 1px solid rgba(212,160,23,0.3);
+    color: var(--gold); padding: 5px 14px; border-radius: 50px;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 48px); font-weight: 900;
+    color: var(--navy); line-height: 1.15; margin-bottom: 16px;
+  }
+  .section-lead { font-size: 17px; color: #4a5568; line-height: 1.75; max-width: 600px; margin-bottom: 56px; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .about-text p { font-size: 16px; line-height: 1.85; color: #374151; margin-bottom: 24px; }
+  .about-highlight {
+    background: linear-gradient(135deg, #0a1628, #1a3a6b);
+    border-radius: 18px; padding: 28px 32px; margin-top: 32px;
+    position: relative; overflow: hidden;
+  }
+  .about-highlight::before {
+    content: '"';
+    position: absolute; top: -10px; left: 20px;
+    font-family: 'Playfair Display', serif; font-size: 120px;
+    color: rgba(212,160,23,0.15); line-height: 1;
+  }
+  .about-highlight p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--white);
+    line-height: 1.5; position: relative; z-index: 1; margin: 0;
+  }
+  .about-highlight span { color: var(--gold); }
+  .about-img-wrap {
+    position: relative; border-radius: 24px; overflow: hidden;
+  }
+  .about-img {
+    width: 100%; height: 480px; object-fit: cover; display: block;
+    background: linear-gradient(135deg, #1a3a6b 0%, #2563a8 50%, #0a1628 100%);
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .img-placeholder {
+    width: 100%; height: 480px; border-radius: 24px;
+    background: linear-gradient(135deg, #1a3a6b 0%, #2563a8 60%, #0a1628 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.7); gap: 16px; font-size: 15px; font-weight: 500;
+    position: relative; overflow: hidden;
+  }
+  .img-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 30% 40%, rgba(212,160,23,0.2) 0%, transparent 60%),
+                      radial-gradient(circle at 70% 70%, rgba(37,99,168,0.3) 0%, transparent 50%);
+  }
+  .img-placeholder svg { width: 64px; height: 64px; opacity: 0.5; position: relative; z-index:1;}
+  .img-placeholder span { position: relative; z-index:1; }
+  .about-badge {
+    position: absolute; bottom: 24px; right: 24px;
+    background: var(--grad2); color: var(--navy);
+    padding: 12px 20px; border-radius: 14px;
+    font-size: 13px; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(212,160,23,0.35);
+  }
+
+  /* ── TEAM ── */
+  #team { background: var(--light); }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .team-card {
+    background: var(--white); border-radius: 24px;
+    padding: 36px 24px; text-align: center;
+    box-shadow: 0 4px 24px rgba(10,22,40,0.06);
+    border: 1px solid rgba(10,22,40,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .team-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--grad2); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .team-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(10,22,40,0.12); }
+  .team-card:hover::before { transform: scaleX(1); }
+  .team-avatar {
+    width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 20px;
+    background: var(--grad1);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900;
+    color: var(--gold); border: 4px solid rgba(212,160,23,0.3);
+    box-shadow: 0 8px 24px rgba(10,22,40,0.15);
+  }
+  .team-img-wrap {
+    width: 100%; aspect-ratio: 1 / 1; border-radius: 0;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #0a1628 0%, #1a3a6b 50%, #2563a8 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .team-img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+    background: #f0f6ff;
+  }
+  .team-img-placeholder {
+    width: 100%; height: 100%; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.5); gap: 12px; font-size: 14px; font-weight: 500;
+    background: linear-gradient(135deg, rgba(10,22,40,0.8) 0%, rgba(26,58,107,0.8) 50%, rgba(37,99,168,0.8) 100%);
+    position: relative;
+  }
+  .team-img-placeholder::before {
+    content: '📸';
+    font-size: 48px;
+    opacity: 0.4;
+  }
+  .team-img-placeholder::after {
+    content: 'Add image here';
+    position: absolute;
+    bottom: 16px; left: 0; right: 0;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+  .team-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px;
+  }
+  .team-role {
+    font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .team-card:first-child .team-avatar { background: var(--grad2); color: var(--navy); }
+
+  /* ── CAMPAIGN ── */
+  #campaign { background: var(--white); }
+  .campaign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .campaign-imgs { display: flex; flex-direction: column; gap: 16px; }
+  .camp-img {
+    border-radius: 18px; overflow: hidden;
+    background: var(--grad1);
+  }
+  .camp-img:first-child { height: 200px; }
+  .camp-img:nth-child(2) { height: 150px; }
+  .camp-img:nth-child(3) { height: 160px; }
+  .camp-img {
+    position: relative;
+  }
+  .camp-placeholder {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .camp-img-inner {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600; gap: 10px;
+    position: absolute; overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 100%);
+  }
+  .camp-img:nth-child(2) .camp-img-inner { background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 100%); }
+  .camp-img:nth-child(3) .camp-img-inner { background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 100%); }
+  .camp-img:nth-child(1) .camp-img-inner { background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 100%); }
+  .camp-img-inner svg { width: 24px; height: 24px; }
+  .camp-img {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .camp-img:hover {
+    transform: scale(1.02);
+  }
+
+  /* ── IMAGE MODAL ── */
+  .image-modal {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 2000;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .image-modal.open {
+    display: flex;
+  }
+  .modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 2001;
+  }
+  .modal-close:hover {
+    background: rgba(0,0,0,0.8);
+  }
+  .campaign-content h2 { margin-bottom: 20px; }
+  .campaign-content p { font-size: 16px; line-height: 1.8; color: #374151; margin-bottom: 28px; }
+  .goal-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .goal-list li {
+    display: flex; align-items: flex-start; gap: 14px;
+    font-size: 15px; color: var(--text);
+  }
+  .goal-dot {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(212,160,23,0.2), rgba(249,115,22,0.2));
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--gold); font-weight: 700; margin-top: 1px;
+  }
+
+  /* ── IMPACT ── */
+  #impact { background: var(--navy); position: relative; overflow: hidden; }
+  #impact::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(212,160,23,0.08) 0%, transparent 60%),
+                      radial-gradient(circle at 80% 20%, rgba(37,99,168,0.12) 0%, transparent 50%);
+  }
+  #impact h2 { color: var(--white); }
+  #impact .section-tag { background: rgba(212,160,23,0.15); }
+  .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .impact-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px; padding: 28px 24px;
+    transition: background 0.3s, transform 0.3s, border-color 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .impact-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(212,160,23,0.4);
+    transform: translateY(-4px);
+  }
+  .impact-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(212,160,23,0.2), rgba(249,115,22,0.2));
+    border: 1px solid rgba(212,160,23,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 16px;
+  }
+  .impact-card h3 { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+  .impact-card p { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+
+  /* ── SOCIAL CONNECT ── */
+  #social { background: var(--light); }
+  .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .social-card {
+    border-radius: 22px; padding: 40px 32px; text-align: center;
+    text-decoration: none; transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .social-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.15); }
+  .social-card.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .social-card.tiktok { background: linear-gradient(135deg, #010101, #1a1a2e, #16213e); border: 1px solid rgba(255,255,255,0.1); }
+  .social-card.whatsapp { background: linear-gradient(135deg, #128c7e, #25d366); }
+  .social-card-icon { font-size: 48px; margin-bottom: 16px; }
+  .social-card h3 { font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .social-card p { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+  .social-card a, .social-card-link {
+    display: inline-block;
+    background: rgba(255,255,255,0.2); color: var(--white);
+    padding: 10px 24px; border-radius: 50px; font-size: 14px; font-weight: 600;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.3);
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    cursor: pointer;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .social-card a:hover, .social-card-link:hover { background: rgba(255,255,255,0.3); }
+  .social-card a:focus-visible, .social-card-link:focus-visible { outline-color: rgba(255,255,255,0.6); }
+
+  /* ── FAQ ── */
+  #faq { background: var(--white); }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .faq-item {
+    background: var(--light); border-radius: 18px; padding: 28px;
+    border: 1px solid rgba(10,22,40,0.06);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+  }
+  .faq-item:hover { border-color: var(--gold); box-shadow: 0 4px 20px rgba(212,160,23,0.1); }
+  .faq-item:focus-visible { outline-color: var(--sky); }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 0;
+    transition: margin-bottom 0.3s;
+  }
+  .faq-q.open { margin-bottom: 12px; color: var(--sky); }
+  .faq-toggle {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    background: var(--navy); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 300; transition: transform 0.3s, background 0.3s;
+  }
+  .faq-q.open .faq-toggle { transform: rotate(45deg); background: var(--sky); }
+  .faq-a { font-size: 15px; color: #4a5568; line-height: 1.7; display: none; }
+  .faq-a.open { display: block; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--cream); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 20px; background: var(--white); border-radius: 16px;
+    border: 1px solid rgba(10,22,40,0.06);
+  }
+  .contact-icon {
+    width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+    background: var(--grad1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .contact-item h4 { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .contact-item p { font-size: 15px; color: var(--navy); font-weight: 500; }
+  .contact-form { background: var(--white); border-radius: 24px; padding: 40px; box-shadow: 0 8px 40px rgba(10,22,40,0.07); }
+  .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 28px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 8px; letter-spacing: 0.3px; }
+  .form-group input,
+  .form-group textarea {
+    width: 100%; padding: 14px 18px;
+    border: 2px solid rgba(10,22,40,0.1); border-radius: 12px;
+    font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text);
+    background: var(--cream); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    resize: vertical;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--sky); box-shadow: 0 0 0 4px rgba(37,99,168,0.1);
+    background: var(--white);
+  }
+  .form-group input:active, .form-group textarea:active {
+    background: var(--white);
+  }
+  .form-group textarea { height: 130px; }
+  .btn-submit {
+    width: 100%; padding: 15px; border-radius: 12px;
+    background: var(--grad1); color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700;
+    border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 24px rgba(10,22,40,0.25);
+    letter-spacing: 0.3px;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(10,22,40,0.3); }
+  .btn-submit:active { transform: translateY(0); }
+  .btn-submit:focus-visible { outline-color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); padding: 64px 5% 32px;
+    color: rgba(255,255,255,0.6);
+  }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand { display: flex; flex-direction: column; gap: 16px; }
+  .footer-tagline { font-size: 14px; line-height: 1.7; max-width: 260px; }
+  .footer-social { display: flex; gap: 10px; }
+  .footer-social a {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.6); font-size: 16px; text-decoration: none;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .footer-social a:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .footer-social a:focus-visible { outline-color: var(--gold); }
+  .footer-col h4 { font-size: 13px; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { 
+    color: rgba(255,255,255,0.55); text-decoration: none; font-size: 14px; 
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 4px 0;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-links a:focus-visible { outline-color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 28px; display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 13px; }
+  .footer-bottom span { color: var(--gold); }
+
+  /* ── WHATSAPP FLOAT ── */
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    width: 58px; height: 58px; border-radius: 50%;
+    background: linear-gradient(135deg, #128c7e, #25d366);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 28px rgba(37,211,102,0.45);
+    text-decoration: none; transition: transform 0.3s, box-shadow 0.3s;
+    animation: pulse-wa 2.5s ease infinite;
+    -webkit-tap-highlight-color: transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 12px 36px rgba(37,211,102,0.55); }
+  .wa-float:active { transform: scale(0.95); }
+  .wa-float:focus-visible { outline-color: var(--white); }
+  .wa-float svg { width: 30px; height: 30px; fill: white; }
+  @keyframes pulse-wa {
+    0%, 100% { box-shadow: 0 8px 28px rgba(37,211,102,0.45); }
+    50% { box-shadow: 0 8px 28px rgba(37,211,102,0.7), 0 0 0 12px rgba(37,211,102,0.1); }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 0 4%; }
+    section { padding: 80px 4%; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { display: none; }
+    .about-grid, .campaign-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .impact-grid { grid-template-columns: 1fr 1fr; }
+    .social-grid { grid-template-columns: 1fr; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu {
+      position: fixed; top: 72px; left: 0; right: 0;
+      background: rgba(10,22,40,0.98);
+      backdrop-filter: blur(20px);
+      padding: 24px 5%; display: flex; flex-direction: column; gap: 16px;
+      border-bottom: 1px solid rgba(212,160,23,0.2);
+      z-index: 999; transform: translateY(-100%); opacity: 0;
+      transition: transform 0.3s, opacity 0.3s;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .mobile-menu.open { transform: translateY(0); opacity: 1; }
+    .mobile-menu a { 
+      color: rgba(255,255,255,0.8); text-decoration: none; font-size: 16px; font-weight: 500; 
+      padding: 12px 0; min-height: 44px; display: flex; align-items: center; border-bottom: 1px solid rgba(212,160,23,0.1);
+    }
+    .campaign-imgs { flex-direction: row; flex-wrap: wrap; }
+    .camp-img { height: 180px; flex: 1; min-width: 140px; }
+    .camp-img:first-child { height: 180px; flex-basis: 100%; }
+    .about-highlight { padding: 24px 28px; margin-top: 28px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { height: 64px; padding: 0 4%; }
+    #hero { padding-top: 64px; }
+    h1 { font-size: clamp(28px, 5vw, 42px); }
+    h2 { font-size: clamp(24px, 4vw, 36px); }
+    section { padding: 64px 4%; }
+    .container { padding: 0; }
+    .team-grid { grid-template-columns: 1fr; }
+    .team-img-wrap { aspect-ratio: 1 / 1; margin-bottom: 16px; }
+    .team-img-placeholder { font-size: 13px; }
+    .team-img-placeholder::before { font-size: 44px; }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    .hero-badge { font-size: 11px; padding: 5px 12px; margin-bottom: 16px; }
+    .hero-sub { font-size: 16px; margin-bottom: 28px; }
+    .hero-btns { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-outline { 
+      text-align: center; justify-content: center; width: 100%; 
+      padding: 14px 24px; font-size: 15px; min-height: 44px;
+    }
+    .btn-submit { min-height: 44px; font-size: 15px; }
+    .hero-social { flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .social-pill { font-size: 12px; padding: 8px 14px; flex: 1; min-width: 100px; }
+    .team-card { padding: 28px 20px; }
+    .team-avatar { width: 80px; height: 80px; font-size: 24px; margin-bottom: 16px; }
+    .team-name { font-size: 15px; }
+    .contact-item { padding: 16px; gap: 12px; }
+    .contact-icon { width: 40px; height: 40px; font-size: 18px; }
+    .contact-item h4 { font-size: 12px; }
+    .contact-item p { font-size: 14px; }
+    .contact-form { padding: 32px 24px; }
+    .contact-form h3 { font-size: 20px; margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { font-size: 12px; margin-bottom: 6px; }
+    .form-group input, .form-group textarea { padding: 12px 14px; font-size: 14px; }
+    .form-group textarea { height: 110px; }
+    .faq-item { padding: 20px; border-radius: 16px; }
+    .faq-q { font-size: 15px; }
+    .faq-a { font-size: 14px; }
+  }
+
+  @media (max-width: 640px) {
+    html { font-size: 14px; }
+    nav { padding: 0 3%; }
+    section { padding: 56px 3%; }
+    .container { padding: 0; }
+    h1 { font-size: clamp(24px, 6vw, 36px); line-height: 1.2; }
+    h2 { font-size: clamp(20px, 5vw, 28px); }
+    .section-lead { font-size: 15px; margin-bottom: 40px; }
+    .hero-badge { font-size: 10px; padding: 4px 10px; margin-bottom: 12px; }
+    .hero-sub { font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+    .hero-btns { gap: 10px; }
+    .btn-primary, .btn-outline { 
+      padding: 12px 20px; font-size: 14px; min-height: 40px; gap: 6px;
+      flex-direction: column;
+      align-items: center;
+    }
+    .btn-primary svg, .btn-outline svg { width: 14px; height: 14px; }
+    .btn-submit { min-height: 40px; font-size: 14px; padding: 12px; }
+    .hero-social { flex-direction: row; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .social-pill { 
+      font-size: 11px; padding: 6px 12px; flex: 1; min-width: 85px;
+      min-height: 36px; justify-content: center;
+    }
+    .social-pill svg { width: 14px; height: 14px; }
+    .about-text, .campaign-content { margin-bottom: 32px; }
+    .about-highlight { padding: 20px 24px; margin-top: 24px; }
+    .about-highlight p { font-size: 15px; }
+    .about-img-wrap { border-radius: 18px; }
+    .img-placeholder { height: 280px; font-size: 13px; }
+    .team-card { padding: 24px 16px; border-radius: 18px; margin-bottom: 16px; }
+    .team-avatar { width: 70px; height: 70px; font-size: 20px; margin-bottom: 12px; }
+    .team-name { font-size: 14px; }
+    .team-role { font-size: 11px; }
+    .team-img-wrap { aspect-ratio: 1 / 1; margin-bottom: 16px; }
+    .team-img-placeholder { font-size: 12px; }
+    .team-img-placeholder::before { font-size: 40px; }
+    .camp-img { height: 160px; }
+    .camp-img:first-child { height: 160px; }
+    .camp-img-inner { font-size: 13px; }
+    .goal-list { gap: 12px; }
+    .goal-list li { font-size: 14px; }
+    .goal-dot { width: 24px; height: 24px; font-size: 11px; }
+    .impact-card { padding: 24px 20px; border-radius: 16px; }
+    .impact-icon { width: 40px; height: 40px; font-size: 20px; margin-bottom: 12px; }
+    .impact-card h3 { font-size: 14px; }
+    .impact-card p { font-size: 12px; margin-top: 4px; }
+    .social-card { padding: 32px 24px; border-radius: 18px; }
+    .social-card-icon { font-size: 40px; margin-bottom: 12px; }
+    .social-card h3 { font-size: 18px; margin-bottom: 6px; }
+    .social-card p { font-size: 13px; margin-bottom: 16px; }
+    .social-card a, .social-card-link { 
+      padding: 8px 20px; font-size: 13px; min-height: 36px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .faq-item { padding: 18px 16px; border-radius: 14px; margin-bottom: 12px; }
+    .faq-q { font-size: 14px; gap: 10px; }
+    .faq-toggle { width: 24px; height: 24px; font-size: 14px; }
+    .faq-a { font-size: 13px; }
+    .contact-grid { gap: 40px; }
+    .contact-info { gap: 16px; }
+    .contact-item { padding: 14px 12px; border-radius: 12px; gap: 10px; }
+    .contact-icon { width: 36px; height: 36px; font-size: 16px; border-radius: 8px; }
+    .contact-item h4 { font-size: 11px; margin-bottom: 2px; }
+    .contact-item p { font-size: 13px; }
+    .contact-form { padding: 24px 20px; border-radius: 18px; }
+    .contact-form h3 { font-size: 18px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { font-size: 11px; margin-bottom: 5px; }
+    .form-group input, .form-group textarea { 
+      padding: 10px 12px; font-size: 14px; border-radius: 8px;
+      border: 1.5px solid rgba(10,22,40,0.1);
+    }
+    .form-group textarea { height: 100px; }
+    footer { padding: 48px 3% 24px; }
+    .footer-tagline { font-size: 13px; max-width: 100%; }
+    .footer-col h4 { font-size: 12px; margin-bottom: 14px; }
+    .footer-links a { font-size: 13px; }
+    .footer-bottom p { font-size: 12px; }
+    .wa-float { 
+      width: 52px; height: 52px; bottom: 20px; right: 20px;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+    }
+    .wa-float svg { width: 26px; height: 26px; }
+    .stat-num { font-size: 28px; }
+    .stat-label { font-size: 11px; }
+  }
+
+  @media (max-width: 480px) {
+    html { font-size: 13px; }
+    nav { padding: 0 3%; height: 60px; }
+    #hero { padding-top: 60px; min-height: auto; }
+    section { padding: 48px 3%; }
+    h1 { font-size: clamp(20px, 7vw, 32px); margin-bottom: 16px; }
+    h2 { font-size: clamp(18px, 5vw, 24px); }
+    .section-lead { font-size: 14px; margin-bottom: 32px; }
+    .hero-badge { font-size: 9px; padding: 3px 8px; margin-bottom: 12px; letter-spacing: 1px; }
+    .hero-sub { font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+    .hero-btns { flex-direction: column; gap: 8px; }
+    .btn-primary, .btn-outline { 
+      padding: 11px 18px; font-size: 13px; min-height: 38px; 
+      border-radius: 8px;
+    }
+    .btn-primary { box-shadow: 0 4px 12px rgba(212,160,23,0.3); }
+    .btn-outline { border-width: 1.5px; }
+    .hero-social { margin-top: 16px; gap: 6px; }
+    .social-pill { 
+      font-size: 10px; padding: 5px 10px; min-width: 80px; min-height: 32px;
+      border-radius: 6px;
+    }
+    .about-highlight { padding: 18px 20px; margin-top: 20px; font-size: 13px; }
+    .about-highlight p { font-size: 14px; line-height: 1.4; }
+    .team-card { padding: 20px 14px; margin-bottom: 12px; }
+    .team-avatar { width: 60px; height: 60px; font-size: 18px; margin-bottom: 10px; }
+    .team-name { font-size: 13px; }
+    .team-role { font-size: 10px; }
+    .team-img-wrap { aspect-ratio: 1 / 1; margin-bottom: 12px; }
+    .team-img-placeholder { font-size: 11px; }
+    .team-img-placeholder::before { font-size: 36px; }
+    .camp-img { height: 140px; }
+    .goal-list { gap: 10px; }
+    .goal-list li { font-size: 13px; }
+    .goal-dot { width: 22px; height: 22px; font-size: 10px; }
+    .impact-card { padding: 20px 16px; }
+    .impact-icon { width: 36px; height: 36px; font-size: 18px; }
+    .impact-card h3 { font-size: 13px; line-height: 1.3; }
+    .impact-card p { font-size: 11px; }
+    .social-card { padding: 28px 20px; }
+    .social-card-icon { font-size: 36px; margin-bottom: 10px; }
+    .social-card h3 { font-size: 16px; }
+    .social-card p { font-size: 12px; margin-bottom: 14px; }
+    .social-card a { padding: 7px 18px; font-size: 12px; min-height: 34px; }
+    .faq-item { padding: 16px 14px; margin-bottom: 10px; }
+    .faq-q { font-size: 13px; }
+    .faq-toggle { width: 22px; height: 22px; font-size: 12px; }
+    .faq-a { font-size: 12px; line-height: 1.6; }
+    .contact-item { padding: 12px 10px; gap: 8px; }
+    .contact-icon { width: 32px; height: 32px; font-size: 14px; }
+    .contact-item h4 { font-size: 10px; }
+    .contact-item p { font-size: 12px; }
+    .contact-form { padding: 20px 18px; }
+    .contact-form h3 { font-size: 16px; margin-bottom: 18px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { font-size: 10px; margin-bottom: 4px; }
+    .form-group input, .form-group textarea { 
+      padding: 9px 10px; font-size: 13px; border-radius: 6px;
+    }
+    .form-group textarea { height: 90px; }
+    .btn-submit { padding: 10px; font-size: 13px; min-height: 38px; }
+    footer { padding: 40px 3% 20px; }
+    .footer-social { gap: 8px; }
+    .footer-social a { 
+      width: 32px; height: 32px; font-size: 14px;
+      border-radius: 8px;
+    }
+    .footer-col h4 { font-size: 11px; margin-bottom: 12px; }
+    .footer-links a { font-size: 12px; line-height: 1.6; }
+    .footer-bottom p { font-size: 11px; }
+    .logo-icon { width: 42px; height: 42px; font-size: 18px; border-radius: 8px; }
+    .logo-text strong { font-size: 13px; }
+    .logo-text span { font-size: 8px; }
+    .wa-float { 
+      width: 48px; height: 48px; bottom: 16px; right: 16px;
+      box-shadow: 0 2px 12px rgba(37,211,102,0.35);
+    }
+    .wa-float svg { width: 24px; height: 24px; }
+    .hamburger span { width: 20px; height: 1.5px; }
+  }
+
+  /* Touch-friendly adjustments */
+  @media (hover: none) and (pointer: coarse) {
+    .btn-primary, .btn-outline, .btn-submit, .social-pill, .team-card, 
+    .impact-card, .faq-item, .social-card, .contact-item {
+      min-height: 44px;
+    }
+    .nav-links a, .footer-links a { min-height: 44px; display: inline-flex; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#hero" class="logo-wrap">
+    <div class="logo-icon">
+      <img src="logo.jpeg" alt="FutureMend Logo">
+    </div>
+    <div class="logo-text">
+      <strong>FutureMend</strong>
+      <span>Initiative</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#campaign">Campaign</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Join Us</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#team" onclick="closeMenu()">Team</a>
+  <a href="#campaign" onclick="closeMenu()">Campaign</a>
+  <a href="#impact" onclick="closeMenu()">Impact</a>
+  <a href="gallery.html" onclick="closeMenu()">Gallery</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg-art">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">Youth-Led Humanitarian Movement</div>
+      <h1>Mending the Future,<br><em>One Life at a Time</em></h1>
+      <p class="hero-sub">A youth-led humanitarian movement inspiring change, empowering young minds, and building purpose-driven communities.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Join the Movement
+        </a>
+        <a href="#sponsorship" class="btn-sponsor">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 1v22"/><path d="M5 6h14"/><path d="M5 18h14"/></svg>
+          Sponsor Us
+        </a>
+        <a href="#contact" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Contact Us
+        </a>
+      </div>
+      <div class="hero-social">
+        <a href="https://www.instagram.com/futuremend_initiative?igsh=MWFjMHM0ZG91bjd2bg==" target="_blank" class="social-pill">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </a>
+        <a href="https://www.tiktok.com/@futuremendinitiative" target="_blank" class="social-pill">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+          TikTok
+        </a>
+        <a href="https://wa.me/2348165022507" target="_blank" class="social-pill">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-stat-grid">
+          <div class="stat-box">
+            <div class="stat-num">2000+</div>
+            <div class="stat-label">Instagram Followers</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Schools Visited</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">2</div>
+            <div class="stat-label">States Reached</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Youth-Led</div>
+          </div>
+        </div>
+        <div class="hero-quote">
+          "Awakening purpose, breaking limits, and building a generation that dares to dream bigger."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-tag">Who We Are</div>
+        <h2>More Than an Initiative — A Movement</h2>
+        <p>FutureMend is a youth-driven humanitarian initiative committed to nurturing purpose, hope, and transformation in young people and underserved communities. Born from a deep desire to see young Nigerians thrive, we believe every young person carries untapped greatness within them.</p>
+        <p>We go beyond events and campaigns — we foster lasting relationships, equip young minds with the tools they need, and create spaces where transformation is not just possible, but inevitable.</p>
+        <p>Rooted in Ile-Ife and extending through Osun and Ekiti States, our reach grows because our people believe — deeply — in the mission.</p>
+        <div class="about-highlight">
+          <p>"We are a family, a team, and a <span>purpose-driven force</span> committed to making a difference."</p>
+        </div>
+      </div>
+      <div class="about-img-wrap reveal reveal-delay-2">
+        <img src="com.jpeg" alt="Community Outreach Image" class="about-img">
+        <div class="about-badge">🌍 Making an Impact</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ── -->
+<section id="team">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 56px;" class="reveal">
+      <div class="section-tag">The People Behind It</div>
+      <h2>Meet Our Team</h2>
+      <p class="section-lead" style="margin: 0 auto;">Passionate young changemakers united by one vision — a generation that rises above limits.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-img-wrap">
+          <img src="OLATUNBOSUN S. OLANREWAJU.jpeg" alt="Olatunbosun S. Olanrewaju" class="team-img">
+        </div>
+        <div class="team-avatar">OS</div>
+        <div class="team-name">Olatunbosun S. Olanrewaju</div>
+        <div class="team-role">✦ Founder</div>
+      </div>
+      <div class="team-card reveal reveal-delay-1">
+        <div class="team-img-wrap">
+          <img src="OS.jpeg" alt="Oyewusi S. Omotayo" class="team-img">
+        </div>
+        <div class="team-avatar">OO</div>
+        <div class="team-name">Oyewusi S. Omotayo</div>
+        <div class="team-role">Core Team Member</div>
+      </div>
+      <div class="team-card reveal reveal-delay-2">
+        <div class="team-img-wrap">
+          <img src="OYEWUSI S. OMOTAYO.jpeg" alt="Olatunbosun I. Olayinka" class="team-img">
+        </div>
+        <div class="team-avatar">OI</div>
+        <div class="team-name">Olatunbosun I. Olayinka</div>
+        <div class="team-role">Core Team Member</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CAMPAIGN ── -->
+<section id="campaign">
+  <div class="container">
+    <div class="campaign-grid">
+      <div class="campaign-imgs reveal">
+        <div class="camp-img" onclick="openModal('com.jpeg')">
+          <img src="com.jpeg" alt="Youth Programs" class="camp-placeholder">
+          <div class="camp-img-inner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Youth Programs
+          </div>
+        </div>
+        <div class="camp-img" onclick="openModal('fm.jpeg')">
+          <img src="fm.jpeg" alt="Speaking Sessions" class="camp-placeholder">
+          <div class="camp-img-inner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Speaking Sessions
+          </div>
+        </div>
+        <div class="camp-img" onclick="openModal('com.jpeg')">
+          <img src="com.jpeg" alt="School Outreach" class="camp-placeholder">
+          <div class="camp-img-inner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            School Outreach
+          </div>
+        </div>
+      </div>
+      <div class="campaign-content reveal reveal-delay-2">
+        <div class="section-tag">Our Campaign</div>
+        <h2>Minds Beyond Limits</h2>
+        <p>Minds Beyond Limits is our flagship campaign — a bold declaration that every young mind, regardless of background, deserves the chance to discover their purpose and pursue it with fire.</p>
+        <p>Through school visits, speaking engagements, and immersive sessions, we work directly with young people to dismantle the mental barriers holding them back.</p>
+        <ul class="goal-list">
+          <li><div class="goal-dot">✦</div><span><strong>Awakening Purpose</strong> — Helping young people discover their "why" and anchor their lives to something meaningful</span></li>
+          <li><div class="goal-dot">✦</div><span><strong>Breaking Limiting Beliefs</strong> — Confronting the mental barriers that keep potential locked away</span></li>
+          <li><div class="goal-dot">✦</div><span><strong>Promoting Growth Mindset</strong> — Cultivating resilience, curiosity, and a hunger for continuous growth</span></li>
+          <li><div class="goal-dot">✦</div><span><strong>Supporting Youth Dreams</strong> — Providing mentorship, resources, and a community that believes in them</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMPACT ── -->
+<section id="impact">
+  <div class="container" style="position:relative;z-index:1;">
+    <div style="text-align:center; margin-bottom: 56px;" class="reveal">
+      <div class="section-tag">What We've Done</div>
+      <h2 style="color:var(--white);">Our Impact</h2>
+      <p class="section-lead" style="color:rgba(255,255,255,0.6); margin: 0 auto;">Every milestone is proof that purpose-driven work changes lives.</p>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card reveal">
+        <div class="impact-icon">🚀</div>
+        <h3>Minds Beyond Limits Launch</h3>
+        <p>Successfully launched our flagship campaign across two states</p>
+      </div>
+      <div class="impact-card reveal reveal-delay-1">
+        <div class="impact-icon">📚</div>
+        <h3>Educational Materials</h3>
+        <p>Provided learning resources to students in underserved communities</p>
+      </div>
+      <div class="impact-card reveal reveal-delay-2">
+        <div class="impact-icon">🤝</div>
+        <h3>Volunteer Team Built</h3>
+        <p>Assembled a passionate team of dedicated youth volunteers</p>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-icon">🏅</div>
+        <h3>Elder & Academic Recognition</h3>
+        <p>Acknowledged by community leaders and academic institutions</p>
+      </div>
+      <div class="impact-card reveal reveal-delay-1">
+        <div class="impact-icon">📱</div>
+        <h3>2000+ Instagram Followers</h3>
+        <p>Rapid organic growth within just 3 months of launch</p>
+      </div>
+      <div class="impact-card reveal reveal-delay-2">
+        <div class="impact-icon">🏘️</div>
+        <h3>Community Projects</h3>
+        <p>Executed meaningful community building initiatives</p>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-icon">🎥</div>
+        <h3>Media & Content</h3>
+        <p>Developed compelling content that spreads our message far</p>
+      </div>
+      <div class="impact-card reveal reveal-delay-1">
+        <div class="impact-icon">🌍</div>
+        <h3>Osun & Ekiti Operations</h3>
+        <p>Active campaigns launched in both states with growing reach</p>
+      </div>
+      <div class="impact-card reveal reveal-delay-2">
+        <div class="impact-icon">🏫</div>
+        <h3>3 Schools Visited</h3>
+        <p>Direct impact on students through in-person school outreach programs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOCIAL ── -->
+<section id="social">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 56px;" class="reveal">
+      <div class="section-tag">Stay Connected</div>
+      <h2>Connect With Us</h2>
+      <p class="section-lead" style="margin: 0 auto;">Follow our journey, share our story, and become part of the movement that's changing lives.</p>
+    </div>
+    <div class="social-grid">
+      <div class="social-card instagram reveal">
+        <div class="social-card-icon">📸</div>
+        <h3>Instagram</h3>
+        <p>Follow us for daily inspiration, event updates, and behind-the-scenes moments</p>
+        <a href="https://www.instagram.com/futuremend_initiative?igsh=MWFjMHM0ZG91bjd2bg==" target="_blank">@futuremendinitiative</a>
+      </div>
+      <div class="social-card tiktok reveal reveal-delay-1">
+        <div class="social-card-icon">🎵</div>
+        <h3>TikTok</h3>
+        <p>Watch our powerful short videos on youth empowerment and purpose-driven living</p>
+        <a href="https://www.tiktok.com/@futuremendinitiative" target="_blank">@futuremendinitiative</a>
+      </div>
+      <div class="social-card whatsapp reveal reveal-delay-2">
+        <div class="social-card-icon">💬</div>
+        <h3>WhatsApp</h3>
+        <p>Chat with us directly — ask questions, get involved, or just say hello!</p>
+        <a href="https://wa.me/2348165022507" target="_blank">Chat Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 56px;" class="reveal">
+      <div class="section-tag">Got Questions?</div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          What is FutureMend Initiative?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">FutureMend Initiative is a youth-led humanitarian movement focused on empowering young people through purpose-driven programs, outreach, and community development in Nigeria and beyond.</div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          How can I join the movement?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">You can join through our contact section below, by reaching out via our social media platforms, or by sending us a direct WhatsApp message. We welcome everyone who shares our vision.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Do you accept volunteers?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Absolutely! We welcome passionate volunteers who want to make a real difference. Whether you have skills in communication, education, design, or community work — there's a place for you here.</div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Where does FutureMend operate?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">We are currently active in Osun State and Ekiti State, Nigeria, with our base in Ile-Ife and institutional presence at Federal University, Oye-Ekiti. We are actively expanding our reach.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          How can I support the initiative?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">You can support us through donations, volunteering your time and skills, or forming partnerships. Every form of support — big or small — directly fuels the change we're creating in young lives.</div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          What is Minds Beyond Limits?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Minds Beyond Limits is our flagship campaign targeting youth in schools and communities. It focuses on awakening purpose, dismantling limiting beliefs, and equipping young people with a growth mindset to pursue their dreams boldly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 64px;" class="reveal">
+      <div class="section-tag">Reach Out</div>
+      <h2>Get In Touch</h2>
+      <p class="section-lead" style="margin: 0 auto;">Whether you're ready to join, partner, or simply learn more — we'd love to hear from you.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Address</h4>
+            <p>Ile-Ife, Osun State, Nigeria</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🎓</div>
+          <div>
+            <h4>Institutional Base</h4>
+            <p>Federal University, Oye-Ekiti (FUOYE)</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>+234-816-5022-507</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Email</h4>
+            <p>Futuremendinitiative@gmail.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <h3>Send Us a Message</h3>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="e.g. Adebayo Okafor">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us how you'd like to connect or support our mission…"></textarea>
+        </div>
+        <button class="btn-submit" onclick="handleSubmit(this)">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMAGE MODAL ── -->
+<div class="image-modal" id="imageModal" onclick="closeModal(event)">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <img id="modalImage" src="" alt="Full Image">
+  </div>
+</div>
+
+<!-- ── SPONSORSHIP ── -->
+<section id="sponsorship" style="background: linear-gradient(120deg, #f3f7ff, #e4ecff);">
+  <div class="container" style="text-align:center; padding: 60px 0;">
+    <div class="section-tag">Support Our Cause</div>
+    <h2>Become a Sponsor</h2>
+    <p style="max-width:700px; margin:0 auto 20px; color:#1f2a40;">Your sponsorship empowers youth programs, speaking sessions, and school outreach across Osun and Ekiti. Help us scale our impact to hundreds more students.</p>
+    <div style="display:inline-flex; align-items:center; gap: 14px; font-size: 18px; font-weight:700; color:#0a1740; padding: 14px 20px; border:1px solid #b4c2e7; border-radius:12px; background:#fff; box-shadow: 0 10px 24px rgba(10,22,40,0.08);">
+      <span>Zenith Bank</span>
+      <span style="color:#d62828;">4213668071</span>
+      <span>Sodiq Olanrewaju</span>
+    </div>
+    <div style="margin-top:24px;">
+      <a href="https://wa.me/2348165022507?text=I%20want%20to%20sponsor%20FutureMend%20Initiative" target="_blank" class="btn-primary">Send Sponsorship Message</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="logo-wrap" style="text-decoration:none;">
+          <div class="logo-icon">
+            <img src="logo.jpeg" alt="FutureMend Logo">
+          </div>
+          <div class="logo-text">
+            <strong>FutureMend</strong>
+            <span>Initiative</span>
+          </div>
+        </a>
+        <p class="footer-tagline">A youth-led humanitarian movement committed to mending futures, one life at a time.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/futuremend_initiative?igsh=MWFjMHM0ZG91bjd2bg==" target="_blank" title="Instagram">📸</a>
+          <a href="https://www.tiktok.com/@futuremendinitiative" target="_blank" title="TikTok">🎵</a>
+          <a href="https://wa.me/2348165022507" target="_blank" title="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#team">Our Team</a></li>
+          <li><a href="#campaign">Campaign</a></li>
+          <li><a href="#impact">Our Impact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get Involved</h4>
+        <ul class="footer-links">
+          <li><a href="#contact">Volunteer</a></li>
+          <li><a href="#contact">Partner With Us</a></li>
+          <li><a href="#contact">Donate</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <li><a href="tel:+2348165022507">+234-816-5022-507</a></li>
+          <li><a href="mailto:Futuremendinitiative@gmail.com">Futuremendinitiative<br>@gmail.com</a></li>
+          <li><a href="#contact">Ile-Ife, Osun State</a></li>
+          <li><a href="#contact">FUOYE, Ekiti State</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>FutureMend Initiative</span>. All rights reserved.</p>
+      <p>Made with ❤️ by youth, for youth. | Website by <span>SalamDev</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ── WHATSAPP FLOAT ── -->
+<a href="https://wa.me/2348165022507" target="_blank" class="wa-float" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+  // ── Scroll reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── Sticky nav background ──
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.style.background = window.scrollY > 60
+      ? 'rgba(10,22,40,0.98)'
+      : 'rgba(10,22,40,0.92)';
+  });
+
+  // ── Hamburger ──
+  const ham = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  
+  ham.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menu.classList.toggle('open');
+  });
+  
+  function closeMenu() { 
+    menu.classList.remove('open'); 
+  }
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !ham.contains(e.target) && menu.classList.contains('open')) {
+      closeMenu();
+    }
+  });
+  
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('open')) {
+      closeMenu();
+    }
+  });
+
+  // ── FAQ ──
+  function toggleFaq(item) {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    const isOpen = q.classList.contains('open');
+    document.querySelectorAll('.faq-q.open').forEach(el => el.classList.remove('open'));
+    document.querySelectorAll('.faq-a.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) { q.classList.add('open'); a.classList.add('open'); }
+  }
+
+  // ── Form submit ──
+  function handleSubmit(btn) {
+    btn.textContent = '✓ Message Sent!';
+    btn.style.background = 'linear-gradient(135deg,#128c7e,#25d366)';
+    btn.style.color = '#fff';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.disabled = false;
+    }, 3000);
+  }
+  
+  // ── Image Modal ──
+  function openModal(imageSrc) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = imageSrc;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(event) {
+    if (event && event.target.id !== 'imageModal') return;
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('open');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+  
+  // ── Prevent zoom on double tap ──
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', function(event) {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, false);
+</script>
+</body>
+</html>
